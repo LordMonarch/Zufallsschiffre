@@ -1,10 +1,13 @@
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
-
+*.ctxt
+*.
+*.bluej
 # Folder config file
 Desktop.ini
-
+*.TXT
+*.class
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 

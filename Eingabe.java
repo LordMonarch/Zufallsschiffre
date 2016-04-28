@@ -129,6 +129,7 @@ public class Eingabe{
                 eingabe[1] = Integer.parseInt(zeile[0]);
                 eingabe[2] = Integer.parseInt(zeile[1]);
                 eingabe[3] = Integer.parseInt(zeile[2]);
+                fr.close();
             }catch(IOException e){
             
             }

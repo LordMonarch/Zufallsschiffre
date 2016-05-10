@@ -1,23 +1,12 @@
+ 
 
-/**
- * Beschreiben Sie hier die Klasse Main.
- * 
- * @author (Ihr Name) 
- * @version (eine Versionsnummer oder ein Datum)
- */
-public class Main
-{
-    // Instanzvariablen - ersetzen Sie das folgende Beispiel mit Ihren Variablen
-    private int x;
-
-    /**
-     * Konstruktor für Objekte der Klasse Main
-     */
-    public Main()
-    {
-        // Instanzvariable initialisieren
-        x = 0;
-    }
-
-  
+public class Main {
+	public static void main(String[]args){
+		//Zufallsgenerator z = new Zufallsgenerator(421, 54773, 259200, 3);
+		//Ausgabe a = new Ausgabe();
+		//a.text("Hallo World", "/src/Aufgabe_23/text.out");
+		//z.kongruenzgenerator(20);
+		Chiffrieren start = new Chiffrieren();
+		start.chiffrieren();
+	}
 }

@@ -53,6 +53,13 @@ public class Eingabe{
     
         return eingabe;
     }
+    
+      /**
+     * Ein Beispiel einer Methode - ersetzen Sie diesen Kommentar mit Ihrem eigenen
+     * 
+     * @param  y    ein Beispielparameter für eine Methode
+     * @return        die Summe aus x und y
+     */
     public String dateinameSchreiben(){
         String eingabe = new String();
         boolean iterator = true;

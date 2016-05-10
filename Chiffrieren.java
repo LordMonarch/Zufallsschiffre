@@ -11,33 +11,58 @@ public class Chiffrieren
     private boolean chiffrierungsrichtung;
     Eingabe eingabe = new Eingabe();
     Zufallsgenerator zgenerator;
-    private String text = new String();
     
-    Chiffrieren(){
+    String dateiLesen = new String();
+    String dateiSchreiben = new String();
+    Ausgabe ausgabe = new Ausgabe();
+    public Chiffrieren(){
     this.chiffrierungsrichtung = eingabe.chiffrierungsrichtung();
-    zgenerator = new Zufallsgenerator();
+    this.dateiSchreiben = eingabe.dateinameSchreiben();
+    this.dateiLesen = eingabe.dateinameLesen();
+    
     }
     
     public void chiffrieren(){
         
-        
-        String lesen = new String();
-        String schreiben = new String();
         if(chiffrierungsrichtung == true){
-           lesen = eingabe.dateinameLesen();
+        
+        zgenerator = new Zufallsgenerator( eingabe.schluessel(chiffrierungsrichtung, dateiLesen));
+    }else{
+        
+        zgenerator = new Zufallsgenerator( eingabe.schluessel(chiffrierungsrichtung, dateiSchreiben));
+    }
+        
+        int anzahlBuchstaben = 1;
+        char[] chiff;
+        String text = new String();
+        String speichern = new String();
+        if(chiffrierungsrichtung == true){
+          
            try{
-           FileReader fr = new FileReader(lesen);
+           FileReader fr = new FileReader(dateiLesen);
            BufferedReader br = new BufferedReader(fr);
            text = br.readLine();
            
+           
+           
            while(text != null){
-               
-            
+               chiff = text.toCharArray();
+               for(int i = 0; i < chiff.length ; i++){
+                   zgenerator.kongruenzgenerator(anzahlBuchstaben);
+                   chiff[i] = (char)(chiff[i] ^ zgenerator.getX(anzahlBuchstaben));
+                   anzahlBuchstaben += 1;
+                   speichern += chiff[i];
+                }
+                ausgabe.text(speichern, dateiSchreiben);
+                speichern = "";
             }
            
            
            }catch(IOException e){System.out.println("Sollte nie geworfen werden");}
            
+        }else{
+        
+        
         }
     
     }

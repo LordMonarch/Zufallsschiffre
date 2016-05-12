@@ -16,10 +16,10 @@ public class Zufallsgenerator {
      * @param  values 	Der Array enthaelt a, b, m und den Primaerschluessel.
      */
 	public Zufallsgenerator(int[] values){
-		this.schluessel = 3;//values[0];
-		this.a = 421;//values[1];
-		this.b = 54773;//values[2];
-		this.m = 259200;//values[3];
+		this.schluessel = values[0];
+		this.a = values[1];
+		this.b = values[2];
+		this.m = values[3];
 		this.x = new ArrayList<Integer>();
 		
 		x.add(schluessel);

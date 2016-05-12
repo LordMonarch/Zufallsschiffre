@@ -1,24 +1,25 @@
- 
+import java.io.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-
+/**
+ * Ausgabe um Text in eine Datei zu schreiben.
+ * @author Christian Staudte.
+ */
 public class Ausgabe {
-	public void text(String text, String path){
-		Writer writer;
-		try {
-			File f = new File("path");
-			writer = new FileWriter(f);
-			BufferedWriter bWriter = new BufferedWriter(writer);
-			
-			//write:
-			bWriter.write(text);
-		} catch (IOException e) {
-			e.printStackTrace();
+	
+	/**
+     * Schreibt eine Zeile Text in eine gegebene Datei.
+     * @param  text		Textzeile, die geschrieben werden soll.
+	 * @param  path		Dateienpfad.
+     */
+	public void getText(String text, String path){
+		//Sofortiges schliessen wenn ausgefuert
+		try(FileWriter fw = new FileWriter(path, true); //true: nicht ueberschreiben, sondern Text anhaengen
+			BufferedWriter bw = new BufferedWriter(fw); 
+			PrintWriter pw = new PrintWriter(bw)){
+				
+			pw.println(text);
+		} catch (IOException ioe) {
+				System.err.println("Problem! Konnte nicht in die Datei schreiben:\n" + ioe);
 		}
 	}
-	
 }

@@ -6,66 +6,62 @@
  * @version (eine Versionsnummer oder ein Datum)
  */
 import java.io.*;
+
 public class Chiffrieren
 {
     private boolean chiffrierungsrichtung;
-    Eingabe eingabe = new Eingabe();
-    Zufallsgenerator zgenerator;
+    private Eingabe eingabe = new Eingabe();
+    private Zufallsgenerator zgenerator;
     
-    String dateiLesen = new String();
-    String dateiSchreiben = new String();
-    Ausgabe ausgabe = new Ausgabe();
+    private String dateiLesen = new String();
+    private String dateiSchreiben = new String();
+    private Ausgabe ausgabe = new Ausgabe();
+	
     public Chiffrieren(){
-    this.chiffrierungsrichtung = eingabe.chiffrierungsrichtung();
-    this.dateiSchreiben = eingabe.dateinameSchreiben();
-    this.dateiLesen = eingabe.dateinameLesen();
-    
+		this.chiffrierungsrichtung 	= eingabe.chiffrierungsrichtung();
+		this.dateiSchreiben 		= eingabe.dateinameSchreiben();
+		this.dateiLesen			 	= eingabe.dateinameLesen();
+		
+		chiffrieren();
     }
     
     public void chiffrieren(){
-        
-        if(chiffrierungsrichtung == true){
-        
-        zgenerator = new Zufallsgenerator( eingabe.schluessel(chiffrierungsrichtung, dateiLesen));
-    }else{
-        
-        zgenerator = new Zufallsgenerator( eingabe.schluessel(chiffrierungsrichtung, dateiSchreiben));
-    }
+		int[] inp = eingabe.schluessel(chiffrierungsrichtung, dateiLesen);
+		zgenerator = new Zufallsgenerator(inp);
         
         int anzahlBuchstaben = 1;
-        char[] chiff;
+		
         String text = new String();
         String speichern = new String();
-        if(chiffrierungsrichtung == true){
-          
-           try{
-           FileReader fr = new FileReader(dateiLesen);
-           BufferedReader br = new BufferedReader(fr);
-           text = br.readLine();
+		
+        if(chiffrierungsrichtung){
+			try{
+				FileReader 		fr = new FileReader(dateiLesen);
+				BufferedReader 	br = new BufferedReader(fr);
+				
+				ausgabe.getText(zgenerator.keys()[0] + " " + zgenerator.keys()[1] + " " + zgenerator.keys()[2], dateiSchreiben);
+				
+				text = br.readLine();
            
-           
-           
-           while(text != null){
-               chiff = text.toCharArray();
-               for(int i = 0; i < chiff.length ; i++){
-                   zgenerator.kongruenzgenerator(anzahlBuchstaben);
-                   chiff[i] = (char)(chiff[i] ^ zgenerator.getX(anzahlBuchstaben));
-                   anzahlBuchstaben += 1;
-                   speichern += chiff[i];
-                }
-                ausgabe.text(speichern, dateiSchreiben);
-                speichern = "";
-            }
-           
-           
-           }catch(IOException e){System.out.println("Sollte nie geworfen werden");}
+				while(text != null){
+					char[] chiff = text.toCharArray();
+					zgenerator.kongruenzgenerator(chiff.length);
+					
+					for(int i = 0; i < chiff.length ; i++){
+						chiff[i] = (char)(chiff[i] ^ (zgenerator.getX(anzahlBuchstaben)%10));
+						anzahlBuchstaben++;
+						speichern += chiff[i];
+					}
+					ausgabe.getText(speichern, dateiSchreiben);
+					speichern = "";
+					text = br.readLine();
+				}
+			}catch(IOException e){
+				System.out.println("Sollte nie geworfen werden");
+			}
            
         }else{
-        
-        
-        }
-    
+			
+		}
     }
-    
-    
 }

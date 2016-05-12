@@ -17,14 +17,13 @@ public class Eingabe{
      */
     
     public boolean chiffrierungsrichtung(){
-    Scanner keyboard = new Scanner(System.in);
-    System.out.println("Wollt ihr Chiffrieren oder Dechiffrieren?");
-    System.out.println("Irgendwas eingeben zum Chiffrieren nichts eingeben zum Dechiffrieren!");
-    if(keyboard.nextLine().equals("")){
-        return false;
-    }else{
-        return true;
-    }
+		Scanner keyboard = new Scanner(System.in);
+		
+		System.out.println("Wollt ihr Chiffrieren oder Dechiffrieren?");
+		System.out.println("Irgendwas eingeben zum Chiffrieren nichts eingeben zum Dechiffrieren!");
+		
+		if(keyboard.nextLine().equals("")) return false;
+		else return true;
     }
     
     /**
@@ -87,33 +86,32 @@ public class Eingabe{
      * @return        die Summe aus x und y
      */
     public int[] schluessel(boolean chiffrieren, String pfad){
-         int[] eingabe = new int[4];
-         boolean iterator = true;
-         if(chiffrieren == true){
+        int[] eingabe = new int[4];
+        boolean iterator = true;
+        if(chiffrieren == true){
             
             for(int i = 0 ; i < 4; i++){
+				if(i == 0){System.out.println("Bitte den Primaerschluessel eingeben: ");}
+				if(i == 1){System.out.println("Bitte den ersten Sekundaerschluessel eingeben: ");}
+				if(i == 2){System.out.println("Bitte den zweiten Sekundaerschluessel eingeben: ");}
+				if(i == 3){System.out.println("Bitte den dritten Sekundaerschluessel eingeben: ");}
+				iterator = true;
+					while(iterator){
+						iterator = false;
+						try{    
+							Scanner keyboard = new Scanner(System.in);
+							eingabe[i] = keyboard.nextInt();
+				
+						}catch(InputMismatchException e){
+							System.out.println("Bitte nur Zahlen eingeben");
+							iterator = true;
+						}
+					
+					}
             
-            if(i == 0){System.out.println("Bitte den Primärschlüssel eingeben: ");}
-            if(i == 1){System.out.println("Bitte den ersten Sekundärschlüssel eingeben: ");}
-            if(i == 2){System.out.println("Bitte den zweiten Sekundärschlüssel eingeben: ");}
-            if(i == 3){System.out.println("Bitte den dritten Sekundärschlüssel eingeben: ");}
-            iterator = true;
-            while(iterator){
-                iterator = false;
-                try{    
-                    Scanner keyboard = new Scanner(System.in);
-                    eingabe[i] = keyboard.nextInt();
-        
-                }catch(InputMismatchException e){
-                    System.out.println("Bitte nur Zahlen eingeben");
-                    iterator = true;
-                }
-            
-            }
-            
-        }   
-    }else{
-            System.out.println("Bitte den Primärschlüssel eingeben");
+			}   
+		}else{
+            System.out.println("Bitte den Primaerschluessel eingeben");
             iterator = true;
             while(iterator){
                 iterator = false;
@@ -131,11 +129,17 @@ public class Eingabe{
             try{
                 FileReader fr = new FileReader(pfad);
                 BufferedReader br = new BufferedReader(fr);
-                String[] zeile = new String[3];
-                zeile = br.readLine().split(" ");
-                eingabe[1] = Integer.parseInt(zeile[0]);
-                eingabe[2] = Integer.parseInt(zeile[1]);
-                eingabe[3] = Integer.parseInt(zeile[2]);
+				
+                String zeile = br.readLine();
+				String[] parts = zeile.split(" ");
+				try{
+					eingabe[1] = Integer.parseInt(parts[0]);
+					eingabe[2] = Integer.parseInt(parts[1]);
+					eingabe[3] = Integer.parseInt(parts[2]);
+				}catch(Exception e){
+					System.err.println("Konnte nicht parsen!");
+				}
+                
                 fr.close();
             }catch(IOException e){
             
